@@ -204,7 +204,6 @@ const formErrors = ref({
 
 const roleOptions = computed(() => [
   { label: t('common.all'), value: '' },
-  { label: 'Admin', value: 'admin' },
   { label: t('auth.merchant'), value: 'merchant' },
   { label: t('auth.customer'), value: 'user' }
 ])
@@ -238,6 +237,9 @@ async function loadData() {
 
 const filteredUsers = computed(() => {
   return users.value.filter(user => {
+    // Exclude admin users from the list
+    if (user.role === 'admin') return false
+    
     const matchesSearch = user.name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
                          user.email.toLowerCase().includes(searchQuery.value.toLowerCase())
     const matchesRole = !roleFilter.value || user.role === roleFilter.value
