@@ -137,7 +137,7 @@ onMounted(async () => {
 async function loadStats() {
   loading.value = true
   try {
-    const response = await axios.get('/api/dashboard/admin/stats')
+    const response = await axios.get('/dashboard/admin/stats')
     stats.value = response.data
   } catch (error) {
     console.error('Failed to load admin stats:', error)

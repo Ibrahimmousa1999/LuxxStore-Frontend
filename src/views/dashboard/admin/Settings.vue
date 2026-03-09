@@ -397,7 +397,7 @@ async function bulkStatusChange(type, active) {
   const action = active ? 'activate' : 'deactivate'
   
   try {
-    const endpoint = `/api/admin/bulk-status/${type}`
+    const endpoint = `/admin/bulk-status/${type}`
     await axios.put(endpoint, { active })
     
     const actionText = active ? 'activated' : 'deactivated'
@@ -417,7 +417,7 @@ async function confirmReset() {
   loading.value[confirmType.value] = true
 
   try {
-    const endpoint = `/api/admin/reset/${confirmType.value}`
+    const endpoint = `/admin/reset/${confirmType.value}`
     await axios.delete(endpoint)
     
     showToast('success', 'Reset Successful', `Successfully reset ${confirmType.value}`)

@@ -229,7 +229,7 @@ const categoryEmojis = ['👗', '⌚', '🏺', '✨', '💎', '🎨']
 async function loadCategories() {
   loadingCategories.value = true
   try {
-    const response = await axios.get('/api/categories')
+    const response = await axios.get('/categories')
     const apiCategories = response.data.data || response.data
     // Filter to only show active categories on home page
     const activeCategories = apiCategories.filter(cat => cat.active)
@@ -250,7 +250,7 @@ async function loadCategories() {
 async function loadFeaturedProducts() {
   loading.value = true
   try {
-    const response = await axios.get('/api/products', {
+    const response = await axios.get('/products', {
       params: {
         featured: 1,
         limit: 8

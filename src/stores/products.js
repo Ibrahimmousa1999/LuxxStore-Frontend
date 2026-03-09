@@ -11,7 +11,7 @@ export const useProductsStore = defineStore('products', () => {
   async function fetchProducts(params = {}) {
     loading.value = true
     try {
-      const response = await axios.get('/api/products', { params })
+      const response = await axios.get('/products', { params })
       products.value = response.data.data || response.data
       return response.data
     } catch (error) {
@@ -25,7 +25,7 @@ export const useProductsStore = defineStore('products', () => {
   async function fetchProduct(id) {
     loading.value = true
     try {
-      const response = await axios.get(`/api/products/${id}`)
+      const response = await axios.get(`/products/${id}`)
       currentProduct.value = response.data
       return response.data
     } catch (error) {
@@ -39,7 +39,7 @@ export const useProductsStore = defineStore('products', () => {
   async function createProduct(productData) {
     loading.value = true
     try {
-      const response = await axios.post('/api/products', productData)
+      const response = await axios.post('/products', productData)
       products.value.unshift(response.data)
       return response.data
     } catch (error) {
@@ -53,7 +53,7 @@ export const useProductsStore = defineStore('products', () => {
   async function updateProduct(id, productData) {
     loading.value = true
     try {
-      const response = await axios.put(`/api/products/${id}`, productData)
+      const response = await axios.put(`/products/${id}`, productData)
       const index = products.value.findIndex(p => p.id === id)
       if (index !== -1) {
         products.value[index] = response.data
@@ -70,7 +70,7 @@ export const useProductsStore = defineStore('products', () => {
   async function deleteProduct(id) {
     loading.value = true
     try {
-      await axios.delete(`/api/products/${id}`)
+      await axios.delete(`/products/${id}`)
       products.value = products.value.filter(p => p.id !== id)
     } catch (error) {
       console.error('Error deleting product:', error)
@@ -83,7 +83,7 @@ export const useProductsStore = defineStore('products', () => {
   async function fetchCategories() {
     loading.value = true
     try {
-      const response = await axios.get('/api/categories')
+      const response = await axios.get('/categories')
       categories.value = response.data
       return response.data
     } catch (error) {
@@ -97,7 +97,7 @@ export const useProductsStore = defineStore('products', () => {
   async function createCategory(categoryData) {
     loading.value = true
     try {
-      const response = await axios.post('/api/categories', categoryData)
+      const response = await axios.post('/categories', categoryData)
       categories.value.push(response.data)
       return response.data
     } catch (error) {
@@ -110,7 +110,7 @@ export const useProductsStore = defineStore('products', () => {
 
   async function fetchMyProducts(params = {}) {
     try {
-      const response = await axios.get('/api/merchant/products', { params })
+      const response = await axios.get('/merchant/products', { params })
       return response.data
     } catch (error) {
       console.error('Error fetching merchant products:', error)

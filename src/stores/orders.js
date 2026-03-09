@@ -10,7 +10,7 @@ export const useOrdersStore = defineStore('orders', () => {
   async function fetchOrders(params = {}) {
     loading.value = true
     try {
-      const response = await axios.get('/api/orders', { params })
+      const response = await axios.get('/orders', { params })
       orders.value = response.data.data || response.data
       return response.data
     } catch (error) {
@@ -24,7 +24,7 @@ export const useOrdersStore = defineStore('orders', () => {
   async function fetchOrder(id) {
     loading.value = true
     try {
-      const response = await axios.get(`/api/orders/${id}`)
+      const response = await axios.get(`/orders/${id}`)
       currentOrder.value = response.data
       return response.data
     } catch (error) {
@@ -38,7 +38,7 @@ export const useOrdersStore = defineStore('orders', () => {
   async function createOrder(orderData) {
     loading.value = true
     try {
-      const response = await axios.post('/api/orders', orderData)
+      const response = await axios.post('/orders', orderData)
       orders.value.unshift(response.data)
       return response.data
     } catch (error) {
@@ -52,7 +52,7 @@ export const useOrdersStore = defineStore('orders', () => {
   async function updateOrderStatus(id, status) {
     loading.value = true
     try {
-      const response = await axios.put(`/api/orders/${id}`, { status })
+      const response = await axios.put(`/orders/${id}`, { status })
       const index = orders.value.findIndex(o => o.id === id)
       if (index !== -1) {
         orders.value[index] = response.data
@@ -69,7 +69,7 @@ export const useOrdersStore = defineStore('orders', () => {
   async function deleteOrder(id) {
     loading.value = true
     try {
-      await axios.delete(`/api/orders/${id}`)
+      await axios.delete(`/orders/${id}`)
       orders.value = orders.value.filter(o => o.id !== id)
     } catch (error) {
       console.error('Error deleting order:', error)

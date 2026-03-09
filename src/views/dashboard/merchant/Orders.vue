@@ -233,7 +233,7 @@ onMounted(async () => {
 async function loadOrders() {
   loading.value = true
   try {
-    const response = await axios.get('/api/orders')
+    const response = await axios.get('/orders')
     // Handle paginated response
     orders.value = response.data.data || response.data
   } catch (error) {
@@ -260,7 +260,7 @@ const filteredOrders = computed(() => {
 
 async function updateOrderStatus(order) {
   try {
-    await axios.put(`/api/orders/${order.id}`, { status: order.status })
+    await axios.put(`/orders/${order.id}`, { status: order.status })
     showToast('success', 'Status Updated', `Order #${order.order_number || order.id} status changed to ${order.status}`)
   } catch (error) {
     console.error('Error updating order status:', error)

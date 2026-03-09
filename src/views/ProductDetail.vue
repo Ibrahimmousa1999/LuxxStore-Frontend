@@ -182,7 +182,7 @@ const features = computed(() => [
 
 onMounted(async () => {
   try {
-    const response = await axios.get(`/api/products/${route.params.id}`)
+    const response = await axios.get(`/products/${route.params.id}`)
     product.value = response.data
     console.log('Product data:', product.value)
     console.log('Product images:', product.value.images)

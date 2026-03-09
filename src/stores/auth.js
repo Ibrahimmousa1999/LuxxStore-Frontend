@@ -15,7 +15,7 @@ export const useAuthStore = defineStore('auth', () => {
 
   async function login(credentials) {
     try {
-      const response = await axios.post('/api/auth/login', credentials)
+      const response = await axios.post('/auth/login', credentials)
       token.value = response.data.token
       user.value = response.data.user
       localStorage.setItem('token', token.value)
@@ -28,7 +28,7 @@ export const useAuthStore = defineStore('auth', () => {
 
   async function register(userData) {
     try {
-      const response = await axios.post('/api/auth/register', userData)
+      const response = await axios.post('/auth/register', userData)
       token.value = response.data.token
       user.value = response.data.user
       localStorage.setItem('token', token.value)
@@ -41,7 +41,7 @@ export const useAuthStore = defineStore('auth', () => {
 
   async function loginWithGoogle(googleToken) {
     try {
-      const response = await axios.post('/api/auth/google', { token: googleToken })
+      const response = await axios.post('/auth/google', { token: googleToken })
       token.value = response.data.token
       user.value = response.data.user
       localStorage.setItem('token', token.value)
@@ -54,7 +54,7 @@ export const useAuthStore = defineStore('auth', () => {
 
   async function fetchUser() {
     try {
-      const response = await axios.get('/api/auth/user')
+      const response = await axios.get('/auth/user')
       user.value = response.data
       localStorage.setItem('user', JSON.stringify(response.data))
     } catch (error) {

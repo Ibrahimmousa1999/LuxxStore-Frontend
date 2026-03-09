@@ -169,7 +169,7 @@ async function uploadFile(file, type) {
     }
 
     const token = localStorage.getItem('token')
-    const response = await axios.post('/api/upload/image', formData, {
+    const response = await axios.post('/upload/image', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
         'Authorization': `Bearer ${token}`

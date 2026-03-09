@@ -185,7 +185,7 @@ onMounted(() => {
 async function loadCategories() {
   loading.value = true
   try {
-    const response = await axios.get('/api/categories')
+    const response = await axios.get('/categories')
     categories.value = response.data.data || response.data
   } catch (err) {
     console.error('Error loading categories:', err)
@@ -249,10 +249,10 @@ async function saveCategory() {
     }
     
     if (editingCategory.value) {
-      await axios.put(`/api/categories/${editingCategory.value.id}`, categoryData)
+      await axios.put(`/categories/${editingCategory.value.id}`, categoryData)
       success('Category Updated Successfully', `${categoryForm.value.name_en} has been updated`)
     } else {
-      await axios.post('/api/categories', categoryData)
+      await axios.post('/categories', categoryData)
       success('Category Created Successfully', `${categoryForm.value.name_en} has been added`)
     }
     showCategoryModal.value = false
@@ -320,7 +320,7 @@ function resetForm() {
 async function toggleActive(category) {
   try {
     const newActiveStatus = !category.active
-    await axios.put(`/api/categories/${category.id}`, {
+    await axios.put(`/categories/${category.id}`, {
       ...category,
       active: newActiveStatus
     })
@@ -348,7 +348,7 @@ function openDeleteModal(category) {
 async function confirmDelete() {
   deleting.value = true
   try {
-    await axios.delete(`/api/categories/${categoryToDelete.value.id}`)
+    await axios.delete(`/categories/${categoryToDelete.value.id}`)
     success('Category Deleted', `${categoryToDelete.value.name} has been deleted successfully`)
     showDeleteConfirmModal.value = false
     categoryToDelete.value = null

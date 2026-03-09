@@ -203,7 +203,7 @@ onMounted(async () => {
 async function loadStats() {
   loading.value = true
   try {
-    const response = await axios.get('/api/dashboard/merchant/stats')
+    const response = await axios.get('/dashboard/merchant/stats')
     stats.value = response.data
   } catch (error) {
     console.error('Failed to load merchant stats:', error)

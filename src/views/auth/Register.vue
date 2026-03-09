@@ -138,7 +138,7 @@ function showToast(type, title, message) {
 
 function handleGoogleLogin() {
   const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000/'
-  window.location.href = `${apiUrl}api/auth/google/redirect`
+  window.location.href = `${apiUrl}/auth/google/redirect`
 }
 </script>
 
