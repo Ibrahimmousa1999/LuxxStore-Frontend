@@ -89,7 +89,7 @@
 <script setup>
 import { ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-import axios from 'axios'
+import axios from '@/utils/axios'
 import { useToast } from '@/composables/useToast'
 
 const { t } = useI18n()
@@ -169,7 +169,7 @@ async function uploadFile(file, type) {
     }
 
     const token = localStorage.getItem('token')
-    const response = await axios.post('http://localhost:8000/api/upload/image', formData, {
+    const response = await axios.post('/api/upload/image', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
         'Authorization': `Bearer ${token}`

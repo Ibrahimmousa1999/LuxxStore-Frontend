@@ -112,13 +112,8 @@ function showToast(type, title, message) {
 }
 
 function handleGoogleLogin() {
-  axios.get('/api/auth/google/redirect')
-    .then(() => {
-      window.location.href = '/api/auth/google/redirect'
-    })
-    .catch((err) => {
-      console.error(err)
-    })
+  const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000/'
+  window.location.href = `${apiUrl}api/auth/google/redirect`
 }
 </script>
 
