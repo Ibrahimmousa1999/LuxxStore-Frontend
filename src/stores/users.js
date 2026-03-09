@@ -1,13 +1,11 @@
 import { defineStore } from 'pinia'
-import axios from 'axios'
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/'
+import axios from '@/utils/axios'
 
 export const useUsersStore = defineStore('users', () => {
   // Admin: Get all users
   async function fetchUsers(params = {}) {
     const token = localStorage.getItem('token')
-    const response = await axios.get(`${API_URL}/admin/users`, {
+    const response = await axios.get(`/admin/users`, {
       headers: { Authorization: `Bearer ${token}` },
       params
     })
@@ -17,7 +15,7 @@ export const useUsersStore = defineStore('users', () => {
   // Admin: Get all merchants
   async function fetchMerchants() {
     const token = localStorage.getItem('token')
-    const response = await axios.get(`${API_URL}/admin/merchants`, {
+    const response = await axios.get(`/admin/merchants`, {
       headers: { Authorization: `Bearer ${token}` }
     })
     return response.data
@@ -26,7 +24,7 @@ export const useUsersStore = defineStore('users', () => {
   // Admin: Create merchant
   async function createMerchant(merchantData) {
     const token = localStorage.getItem('token')
-    const response = await axios.post(`${API_URL}/admin/merchants`, merchantData, {
+    const response = await axios.post(`/admin/merchants`, merchantData, {
       headers: { Authorization: `Bearer ${token}` }
     })
     return response.data
@@ -35,7 +33,7 @@ export const useUsersStore = defineStore('users', () => {
   // Admin: Update user
   async function updateUser(id, userData) {
     const token = localStorage.getItem('token')
-    const response = await axios.put(`${API_URL}/admin/users/${id}`, userData, {
+    const response = await axios.put(`/admin/users/${id}`, userData, {
       headers: { Authorization: `Bearer ${token}` }
     })
     return response.data
@@ -44,7 +42,7 @@ export const useUsersStore = defineStore('users', () => {
   // Admin: Delete user
   async function deleteUser(id) {
     const token = localStorage.getItem('token')
-    const response = await axios.delete(`${API_URL}/admin/users/${id}`, {
+    const response = await axios.delete(`/admin/users/${id}`, {
       headers: { Authorization: `Bearer ${token}` }
     })
     return response.data
@@ -53,7 +51,7 @@ export const useUsersStore = defineStore('users', () => {
   // Admin: Toggle user active status
   async function toggleUserActive(id) {
     const token = localStorage.getItem('token')
-    const response = await axios.post(`${API_URL}/admin/users/${id}/toggle-active`, {}, {
+    const response = await axios.post(`/admin/users/${id}/toggle-active`, {}, {
       headers: { Authorization: `Bearer ${token}` }
     })
     return response.data
@@ -62,7 +60,7 @@ export const useUsersStore = defineStore('users', () => {
   // Get current user profile
   async function fetchProfile() {
     const token = localStorage.getItem('token')
-    const response = await axios.get(`${API_URL}/profile`, {
+    const response = await axios.get(`/profile`, {
       headers: { Authorization: `Bearer ${token}` }
     })
     return response.data
@@ -71,7 +69,7 @@ export const useUsersStore = defineStore('users', () => {
   // Update current user profile
   async function updateProfile(profileData) {
     const token = localStorage.getItem('token')
-    const response = await axios.put(`${API_URL}/profile`, profileData, {
+    const response = await axios.put(`/profile`, profileData, {
       headers: { Authorization: `Bearer ${token}` }
     })
     return response.data
@@ -80,7 +78,7 @@ export const useUsersStore = defineStore('users', () => {
   // Delete own account
   async function deleteAccount(password) {
     const token = localStorage.getItem('token')
-    const response = await axios.delete(`${API_URL}/profile`, {
+    const response = await axios.delete(`/profile`, {
       headers: { Authorization: `Bearer ${token}` },
       data: { password }
     })
