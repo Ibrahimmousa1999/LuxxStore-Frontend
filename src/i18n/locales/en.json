@@ -269,7 +269,8 @@
       "inactive": "Inactive",
       "stock": "Stock",
       "all_categories": "All Categories",
-      "all_status": "All Status"
+      "all_status": "All Status",
+      "merchants": "Merchants"
     },
     "merchant": {
       "title": "Merchant Dashboard",

@@ -171,5 +171,5 @@ temp/
 
 # Package manager lock files (keep yarn.lock or package-lock.json, not both)
 # Uncomment the one you're NOT using:
-package-lock.json
+# package-lock.json
 # yarn.lock
