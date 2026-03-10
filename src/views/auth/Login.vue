@@ -76,7 +76,7 @@ const { t } = useI18n()
 const router = useRouter()
 const authStore = useAuthStore()
 
-const form = ref({ email: '', password: '', remember: false })
+const form = ref({ email: 'admin@gmail.com', password: '1212qwqwQ#', remember: false })
 const loading = ref(false)
 
 const toast = ref({
