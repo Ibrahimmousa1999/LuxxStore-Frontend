@@ -4,10 +4,13 @@
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:32px;flex-wrap:wrap;gap:16px">
       <div>
         <div class="section-tag">{{ t('dashboard.admin.title') }}</div>
-        <h1 class="section-title">{{ activeTab === 'merchants' ? t('dashboard.admin.merchants') : t('dashboard.admin.users') }}</h1>
+        <h1 class="section-title">{{ activeTab === 'merchants' ? t('dashboard.admin.merchants') : activeTab === 'admins' ? 'Admins' : t('dashboard.admin.users') }}</h1>
       </div>
       <button v-if="activeTab === 'merchants'" @click="showMerchantModal = true" class="btn btn-gold" style="border-radius:12px">
         + {{ t('dashboard.admin.add_merchant') }}
+      </button>
+      <button v-if="activeTab === 'admins'" @click="showAdminModal = true" class="btn btn-gold" style="border-radius:12px">
+        + Add Admin
       </button>
     </div>
 
@@ -18,6 +21,9 @@
       </button>
       <button @click="activeTab = 'merchants'" :class="activeTab === 'merchants' ? 'tab-active' : 'tab-inactive'" class="tab-btn">
         {{ t('dashboard.admin.merchants') }}
+      </button>
+      <button @click="activeTab = 'admins'" :class="activeTab === 'admins' ? 'tab-active' : 'tab-inactive'" class="tab-btn">
+        Admins
       </button>
     </div>
 
@@ -143,6 +149,59 @@
       </div>
     </div>
 
+    <!-- Add Admin Modal -->
+    <div v-if="showAdminModal" class="modal-overlay" @click.self="showAdminModal = false">
+      <div class="modal-content lux-card" style="max-width:500px;width:90%;max-height:90vh;overflow-y:auto">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px">
+          <h2 style="font-size:24px;font-weight:900;color:var(--text)">Add New Admin</h2>
+          <button @click="showAdminModal = false" class="btn btn-ghost" style="padding:8px;border-radius:8px">✕</button>
+        </div>
+        <form @submit.prevent="saveAdmin">
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <div>
+              <label style="display:block;font-size:13px;font-weight:600;color:var(--text-muted);margin-bottom:8px">Name *</label>
+              <input v-model="adminForm.name" type="text" class="lux-input" 
+                :style="formErrors.name ? 'border-radius:10px;border-color:var(--danger)' : 'border-radius:10px'" 
+                @input="formErrors.name = ''" />
+              <div v-if="formErrors.name" style="color:var(--danger);font-size:12px;margin-top:4px">{{ formErrors.name }}</div>
+            </div>
+            <div>
+              <label style="display:block;font-size:13px;font-weight:600;color:var(--text-muted);margin-bottom:8px">Email *</label>
+              <input v-model="adminForm.email" type="email" class="lux-input" 
+                :style="formErrors.email ? 'border-radius:10px;border-color:var(--danger)' : 'border-radius:10px'" 
+                @input="formErrors.email = ''" />
+              <div v-if="formErrors.email" style="color:var(--danger);font-size:12px;margin-top:4px">{{ formErrors.email }}</div>
+            </div>
+            <div>
+              <label style="display:block;font-size:13px;font-weight:600;color:var(--text-muted);margin-bottom:8px">Password *</label>
+              <input v-model="adminForm.password" type="password" class="lux-input" 
+                :style="formErrors.password ? 'border-radius:10px;border-color:var(--danger)' : 'border-radius:10px'" 
+                @input="formErrors.password = ''" />
+              <div v-if="formErrors.password" style="color:var(--danger);font-size:12px;margin-top:4px">{{ formErrors.password }}</div>
+              <div style="font-size:11px;color:var(--text-dim);margin-top:4px">Minimum 8 characters</div>
+            </div>
+            <div>
+              <label style="display:block;font-size:13px;font-weight:600;color:var(--text-muted);margin-bottom:8px">Phone (Optional)</label>
+              <input v-model="adminForm.phone" type="tel" class="lux-input" 
+                :style="formErrors.phone ? 'border-radius:10px;border-color:var(--danger)' : 'border-radius:10px'" 
+                @input="formErrors.phone = ''" />
+              <div v-if="formErrors.phone" style="color:var(--danger);font-size:12px;margin-top:4px">{{ formErrors.phone }}</div>
+            </div>
+            <div style="padding:12px;background:rgba(212,175,55,0.1);border-radius:8px;border:1px solid rgba(212,175,55,0.3)">
+              <div style="font-size:12px;color:var(--gold);font-weight:600;margin-bottom:4px">⚠️ Admin Privileges</div>
+              <div style="font-size:11px;color:var(--text-muted)">This user will have full administrative access to the system.</div>
+            </div>
+            <div style="display:flex;gap:12px;margin-top:8px">
+              <button type="button" @click="showAdminModal = false" class="btn btn-ghost" style="flex:1;border-radius:10px">Cancel</button>
+              <button type="submit" :disabled="saving" class="btn btn-gold" style="flex:1;border-radius:10px">
+                {{ saving ? 'Creating...' : 'Create Admin' }}
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
     <!-- Delete Confirmation Modal -->
     <div v-if="showDeleteConfirmModal" class="modal-overlay" @click.self="showDeleteConfirmModal = false">
       <div class="modal-content lux-card" style="max-width:500px;width:90%">
@@ -171,6 +230,7 @@ import { useI18n } from 'vue-i18n'
 import { useUsersStore } from '@/stores/users'
 import { useToast } from '@/composables/useToast'
 import LuxSelect from '@/components/LuxSelect.vue'
+import axios from '@/utils/axios'
 
 const { t } = useI18n()
 const usersStore = useUsersStore()
@@ -182,6 +242,7 @@ const roleFilter = ref('')
 const users = ref([])
 const loading = ref(false)
 const showMerchantModal = ref(false)
+const showAdminModal = ref(false)
 const editingUser = ref(null)
 const saving = ref(false)
 const showDeleteConfirmModal = ref(false)
@@ -189,6 +250,13 @@ const userToDelete = ref(null)
 const deleting = ref(false)
 
 const merchantForm = ref({
+  name: '',
+  email: '',
+  password: '',
+  phone: ''
+})
+
+const adminForm = ref({
   name: '',
   email: '',
   password: '',
@@ -237,8 +305,12 @@ async function loadData() {
 
 const filteredUsers = computed(() => {
   return users.value.filter(user => {
-    // Exclude admin users from the list
-    if (user.role === 'admin') return false
+    // Show only admins in admins tab, exclude admins from other tabs
+    if (activeTab.value === 'admins') {
+      if (user.role !== 'admin') return false
+    } else {
+      if (user.role === 'admin') return false
+    }
     
     const matchesSearch = user.name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
                          user.email.toLowerCase().includes(searchQuery.value.toLowerCase())
@@ -322,6 +394,70 @@ async function saveMerchant() {
   }
 }
 
+function validateAdminForm() {
+  formErrors.value = {
+    name: '',
+    email: '',
+    password: '',
+    phone: ''
+  }
+  
+  let isValid = true
+  
+  if (!adminForm.value.name || adminForm.value.name.trim().length < 2) {
+    formErrors.value.name = 'Name must be at least 2 characters'
+    isValid = false
+  }
+  
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  if (!adminForm.value.email || !emailRegex.test(adminForm.value.email)) {
+    formErrors.value.email = 'Please enter a valid email address'
+    isValid = false
+  }
+  
+  if (!adminForm.value.password || adminForm.value.password.length < 8) {
+    formErrors.value.password = 'Password must be at least 8 characters'
+    isValid = false
+  }
+  
+  if (adminForm.value.phone && adminForm.value.phone.length < 10) {
+    formErrors.value.phone = 'Phone number must be at least 10 digits'
+    isValid = false
+  }
+  
+  return isValid
+}
+
+async function saveAdmin() {
+  if (!validateAdminForm()) {
+    return
+  }
+  
+  saving.value = true
+  try {
+    const response = await axios.post('/admin/create-admin', adminForm.value)
+    success('Admin Created Successfully', `${adminForm.value.name} has been added as an admin`)
+    showAdminModal.value = false
+    resetAdminForm()
+    await loadData()
+  } catch (error) {
+    console.error('Error creating admin:', error)
+    const errorMessage = error.response?.data?.message || 'Failed to create admin'
+    
+    if (error.response?.data?.errors) {
+      const errors = error.response.data.errors
+      if (errors.email) formErrors.value.email = errors.email[0]
+      if (errors.name) formErrors.value.name = errors.name[0]
+      if (errors.password) formErrors.value.password = errors.password[0]
+      if (errors.phone) formErrors.value.phone = errors.phone[0]
+    } else {
+      showError('Error', errorMessage)
+    }
+  } finally {
+    saving.value = false
+  }
+}
+
 function editUser(user) {
   editingUser.value = user
   merchantForm.value = {
@@ -369,6 +505,10 @@ async function confirmDelete() {
 function resetForm() {
   merchantForm.value = { name: '', email: '', password: '', phone: '' }
   editingUser.value = null
+}
+
+function resetAdminForm() {
+  adminForm.value = { name: '', email: '', password: '', phone: '' }
 }
 
 function formatDate(dateString) {
