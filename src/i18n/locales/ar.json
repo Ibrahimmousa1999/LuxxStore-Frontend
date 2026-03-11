@@ -40,7 +40,17 @@
     "newsletter_title": "اشترك في نشرتنا البريدية",
     "newsletter_subtitle": "احصل على آخر العروض والمنتجات الحصرية",
     "subscribe": "اشترك",
-    "email_placeholder": "بريدك الإلكتروني..."
+    "email_placeholder": "بريدك الإلكتروني...",
+    "free_shipping": "شحن مجاني",
+    "free_shipping_desc": "للطلبات فوق 500 ريال",
+    "fast_delivery": "توصيل سريع",
+    "fast_delivery_desc": "2-3 أيام عمل",
+    "secure_payment": "دفع آمن",
+    "secure_payment_desc": "محمي 100%",
+    "explore": "استكشف",
+    "no_featured_products": "لا توجد منتجات مميزة",
+    "no_featured_products_desc": "ستظهر المنتجات المميزة هنا قريباً",
+    "products": "منتجات"
   },
   "categories": {
     "fashion": "أزياء",
@@ -270,7 +280,14 @@
       "inactive": "غير نشط",
       "stock": "المخزون",
       "all_categories": "كل الفئات",
-      "all_status": "كل الحالات"
+      "all_status": "كل الحالات",
+      "category_image": "الصورة",
+      "mark_featured": "تعيين كمميز",
+      "remove_featured": "إزالة من المميزة",
+      "featured_updated": "تم تحديث المميز",
+      "failed_update_featured": "فشل تحديث حالة المميز",
+      "marked_featured": "تم تعيينه كمميز",
+      "removed_featured": "تمت إزالته من المميزة"
     },
     "merchant": {
       "title": "لوحة التاجر",
@@ -334,6 +351,7 @@
     "confirm": "تأكيد",
     "loading": "جاري التحميل...",
     "error": "حدث خطأ",
+    "error_title": "خطأ",
     "success": "تم بنجاح",
     "all": "الكل",
     "new": "جديد",
@@ -377,7 +395,19 @@
     "qty": "الكمية",
     "results": "نتائج",
     "welcome_back": "مرحباً بعودتك",
-    "locale": "ar"
+    "locale": "ar",
+    "featured": "مميز",
+    "luxury": "فاخر",
+    "failed_to_load": "فشل التحميل",
+    "category_updated": "تم تحديث الفئة بنجاح",
+    "category_created": "تم إنشاء الفئة بنجاح",
+    "status_updated": "تم تحديث الحالة",
+    "category_deleted": "تم حذف الفئة",
+    "validation_error": "خطأ في التحقق",
+    "failed_update_status": "فشل تحديث حالة الفئة",
+    "category_deleted_success": "تم حذفها بنجاح",
+    "category_updated_msg": "تم تحديثها",
+    "category_created_msg": "تمت إضافتها"
   },
   "order": {
     "status": {

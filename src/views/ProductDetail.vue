@@ -48,7 +48,7 @@
           <span :style="product.stock > 0 ? 'color:var(--success)' : 'color:var(--danger)'" style="font-size:13px;font-weight:700;background:rgba(92,184,92,0.1);padding:4px 12px;border-radius:20px">
             {{ product.stock > 0 ? `✓ ${product.stock} ${t('product.in_stock')}` : t('product.out_of_stock') }}
           </span>
-          <span v-if="product.featured" class="lux-badge badge-gold" style="font-size:11px">FEATURED</span>
+          <span v-if="product.featured" class="lux-badge badge-gold" style="font-size:11px">{{ t('common.featured') }}</span>
         </div>
 
         <!-- Price -->

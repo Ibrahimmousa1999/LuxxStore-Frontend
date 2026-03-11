@@ -76,7 +76,7 @@
               <div v-else style="font-size:64px">📦</div>
               <div v-if="product.featured"
                 style="position:absolute;top:10px;inset-inline-end:10px;background:var(--gold);color:var(--obsidian);font-size:9px;font-weight:900;padding:2px 8px;border-radius:50px;z-index:2;letter-spacing:1px">
-                FEATURED
+                {{ t('common.featured') }}
               </div>
               <div v-else-if="product.old_price && product.old_price > product.price"
                 style="position:absolute;top:10px;inset-inline-end:10px;background:var(--danger);color:white;font-size:9px;font-weight:900;padding:2px 8px;border-radius:50px;z-index:2;letter-spacing:1px">

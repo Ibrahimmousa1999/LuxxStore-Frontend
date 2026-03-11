@@ -80,7 +80,7 @@
                   <button @click="toggleProductStatus(product)" class="btn btn-ghost btn-sm" style="border-radius:8px;padding:6px 10px" :title="product.active ? 'Click to Deactivate' : 'Click to Activate'">
                     {{ product.active ? '✓' : '✕' }}
                   </button>
-                  <button @click="toggleFeatured(product)" class="btn btn-ghost btn-sm" style="border-radius:8px;padding:6px 10px" :title="product.featured ? 'Remove from Featured' : 'Mark as Featured'">
+                  <button @click="toggleFeatured(product)" class="btn btn-ghost btn-sm" style="border-radius:8px;padding:6px 10px" :title="product.featured ? t('dashboard.admin.remove_featured') : t('dashboard.admin.mark_featured')">
                     {{ product.featured ? '⭐' : '☆' }}
                   </button>
                   <button @click="openDeleteModal(product)" class="btn btn-sm" style="border-radius:8px;padding:6px 10px;background:rgba(224,92,92,0.1);color:var(--danger);border:1px solid rgba(224,92,92,0.2)">🗑</button>
@@ -327,11 +327,11 @@ async function toggleFeatured(product) {
     await productsStore.updateProduct(product.id, { featured: newFeatured })
     // Update the product in place instead of reloading
     product.featured = newFeatured
-    const status = newFeatured ? 'marked as featured' : 'removed from featured'
-    showToast('success', 'Featured Updated', `${product.name} has been ${status}`)
+    const status = newFeatured ? t('dashboard.admin.marked_featured') : t('dashboard.admin.removed_featured')
+    showToast('success', t('dashboard.admin.featured_updated'), `${product.name} has been ${status}`)
   } catch (error) {
     console.error('Error toggling featured:', error)
-    showToast('error', 'Error', 'Failed to update featured status')
+    showToast('error', t('common.error_title'), t('dashboard.admin.failed_update_featured'))
   }
 }
 

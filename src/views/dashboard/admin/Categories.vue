@@ -26,6 +26,7 @@
             <thead>
               <tr>
                 <th>ID</th>
+                <th>{{ t('dashboard.admin.category_image') }}</th>
                 <th>{{ t('common.name') }}</th>
                 <th>{{ t('product.description') }}</th>
                 <th>{{ t('dashboard.admin.products_count') }}</th>
@@ -37,6 +38,12 @@
             <tbody>
               <tr v-for="category in filteredCategories" :key="category.id">
                 <td><span style="font-family:monospace;color:var(--gold)">#{{ category.id }}</span></td>
+                <td>
+                  <div v-if="category.image" style="width:60px;height:60px;border-radius:8px;overflow:hidden;border:1px solid var(--border-white)">
+                    <img :src="category.image" :alt="category.name" style="width:100%;height:100%;object-fit:cover" />
+                  </div>
+                  <div v-else style="width:60px;height:60px;border-radius:8px;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:24px">📁</div>
+                </td>
                 <td style="font-weight:600">{{ category.name }}</td>
                 <td style="color:var(--text-muted)">{{ category.description || 'N/A' }}</td>
                 <td><span style="color:var(--gold);font-weight:700">{{ category.products_count || 0 }}</span></td>
@@ -106,6 +113,10 @@
               <div v-if="formErrors.description_ar" style="color:var(--danger);font-size:12px;margin-top:4px">{{ formErrors.description_ar }}</div>
             </div>
             <div>
+              <label style="display:block;font-size:13px;font-weight:600;color:var(--text-muted);margin-bottom:8px">{{ t('dashboard.admin.category_image') }}</label>
+              <ImageUploader v-model="categoryImageData" />
+            </div>
+            <div>
               <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
                 <input type="checkbox" v-model="categoryForm.active" style="width:18px;height:18px;cursor:pointer" />
                 <span style="font-size:14px;font-weight:600;color:var(--text)">{{ t('dashboard.admin.active') }}</span>
@@ -149,6 +160,7 @@ import { ref, computed, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import axios from '@/utils/axios'
 import { useToast } from '@/composables/useToast'
+import ImageUploader from '@/components/ImageUploader.vue'
 
 const { t } = useI18n()
 const { success, error: showError } = useToast()
@@ -171,6 +183,11 @@ const categoryForm = ref({
   active: true
 })
 
+const categoryImageData = ref({
+  main: '',
+  gallery: []
+})
+
 const formErrors = ref({
   name_en: '',
   name_ar: '',
@@ -189,7 +206,7 @@ async function loadCategories() {
     categories.value = response.data.data || response.data
   } catch (err) {
     console.error('Error loading categories:', err)
-    showError('Failed to Load Categories', err.response?.data?.message || 'An error occurred')
+    showError(t('common.failed_to_load') + ' ' + t('nav.categories'), err.response?.data?.message || t('common.error'))
   } finally {
     loading.value = false
   }
@@ -245,15 +262,16 @@ async function saveCategory() {
     const categoryData = {
       ...categoryForm.value,
       name: categoryForm.value.name_en, // Backend expects 'name' field
-      description: categoryForm.value.description_en || categoryForm.value.description_ar
+      description: categoryForm.value.description_en || categoryForm.value.description_ar,
+      image: categoryImageData.value.main || null
     }
     
     if (editingCategory.value) {
       await axios.put(`/categories/${editingCategory.value.id}`, categoryData)
-      success('Category Updated Successfully', `${categoryForm.value.name_en} has been updated`)
+      success(t('common.category_updated'), `${categoryForm.value.name_en} ${t('common.category_updated_msg')}`)
     } else {
       await axios.post('/categories', categoryData)
-      success('Category Created Successfully', `${categoryForm.value.name_en} has been added`)
+      success(t('common.category_created'), `${categoryForm.value.name_en} ${t('common.category_created_msg')}`)
     }
     showCategoryModal.value = false
     resetForm()
@@ -275,9 +293,9 @@ async function saveCategory() {
       
       // Show all errors in toast
       const errorMessages = Object.values(errors).flat().join(', ')
-      showError('Validation Error', errorMessages)
+      showError(t('common.validation_error'), errorMessages)
     } else {
-      showError('Error', errorMessage)
+      showError(t('common.error_title'), errorMessage)
     }
   } finally {
     saving.value = false
@@ -294,6 +312,10 @@ function openCategoryModal(category = null) {
       description_ar: category.description_ar || '',
       active: category.active ?? true
     }
+    categoryImageData.value = {
+      main: category.image || '',
+      gallery: []
+    }
   } else {
     resetForm()
   }
@@ -307,6 +329,10 @@ function resetForm() {
     description_en: '',
     description_ar: '',
     active: true
+  }
+  categoryImageData.value = {
+    main: '',
+    gallery: []
   }
   formErrors.value = {
     name_en: '',
@@ -333,10 +359,10 @@ async function toggleActive(category) {
     
     const newStatus = newActiveStatus ? 'activated' : 'deactivated'
     const categoryName = category.name_en || category.name || 'Category'
-    success('Status Updated', `${categoryName} has been ${newStatus}`)
+    success(t('common.status_updated'), `${categoryName} has been ${newStatus}`)
   } catch (error) {
     console.error('Error toggling category status:', error)
-    showError('Error', 'Failed to update category status')
+    showError(t('common.error_title'), t('common.failed_update_status'))
   }
 }
 
@@ -349,13 +375,13 @@ async function confirmDelete() {
   deleting.value = true
   try {
     await axios.delete(`/categories/${categoryToDelete.value.id}`)
-    success('Category Deleted', `${categoryToDelete.value.name} has been deleted successfully`)
+    success(t('common.category_deleted'), `${categoryToDelete.value.name} ${t('common.category_deleted_success')}`)
     showDeleteConfirmModal.value = false
     categoryToDelete.value = null
     await loadCategories()
   } catch (error) {
     console.error('Error deleting category:', error)
-    showError('Error', error.response?.data?.message || 'Failed to delete category')
+    showError(t('common.error_title'), error.response?.data?.message || t('common.failed_to_load'))
   } finally {
     deleting.value = false
   }

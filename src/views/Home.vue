@@ -54,22 +54,22 @@
           <div class="trust-badge">
             <div class="trust-icon">✓</div>
             <div class="trust-text">
-              <div class="trust-title">Free Shipping</div>
-              <div class="trust-desc">On orders over 500 SAR</div>
+              <div class="trust-title">{{ t('home.free_shipping') }}</div>
+              <div class="trust-desc">{{ t('home.free_shipping_desc') }}</div>
             </div>
           </div>
           <div class="trust-badge">
             <div class="trust-icon">⚡</div>
             <div class="trust-text">
-              <div class="trust-title">Fast Delivery</div>
-              <div class="trust-desc">2-3 business days</div>
+              <div class="trust-title">{{ t('home.fast_delivery') }}</div>
+              <div class="trust-desc">{{ t('home.fast_delivery_desc') }}</div>
             </div>
           </div>
           <div class="trust-badge">
             <div class="trust-icon">🔒</div>
             <div class="trust-text">
-              <div class="trust-title">Secure Payment</div>
-              <div class="trust-desc">100% protected</div>
+              <div class="trust-title">{{ t('home.secure_payment') }}</div>
+              <div class="trust-desc">{{ t('home.secure_payment_desc') }}</div>
             </div>
           </div>
         </div>
@@ -92,13 +92,14 @@
           @click="$router.push({ path: '/shop', query: { category: cat.id } })"
         >
           <div class="cat-bg-enhanced" :style="{ background: cat.gradient }">
-            <span style="font-size:64px;filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3))">{{ cat.emoji }}</span>
+            <img v-if="cat.image" :src="cat.image" :alt="cat.name" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0" />
+            <span v-else style="font-size:64px;filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3))">{{ cat.emoji }}</span>
           </div>
           <div style="padding:20px">
             <h3 style="font-size:18px;font-weight:800;margin-bottom:6px;color:var(--text);font-family:'Playfair Display',serif">{{ locale === 'ar' ? (cat.name_ar || cat.name) : (cat.name_en || cat.name) }}</h3>
             <p style="font-size:14px;color:var(--text-muted);margin-bottom:12px">{{ cat.count }}</p>
             <div style="display:inline-flex;align-items:center;gap:6px;color:var(--gold);font-size:13px;font-weight:600">
-              <span>Explore</span>
+              <span>{{ t('home.explore') }}</span>
               <span style="transition:transform 0.3s" class="cat-arrow">→</span>
             </div>
           </div>
@@ -126,8 +127,8 @@
       <!-- Empty State -->
       <div v-else-if="featuredProducts.length === 0" class="lux-card text-center py-16">
         <div style="font-size:64px;margin-bottom:16px;opacity:0.3">📦</div>
-        <div style="font-size:18px;font-weight:700;color:var(--text-muted);margin-bottom:6px">No Featured Products</div>
-        <div style="font-size:14px;color:var(--text-dim)">Featured products will appear here soon</div>
+        <div style="font-size:18px;font-weight:700;color:var(--text-muted);margin-bottom:6px">{{ t('home.no_featured_products') }}</div>
+        <div style="font-size:14px;color:var(--text-dim)">{{ t('home.no_featured_products_desc') }}</div>
       </div>
       
       <div v-else class="products-grid">
@@ -145,7 +146,7 @@
             <span v-else style="position:relative;z-index:1;font-size:64px">📦</span>
             <div v-if="product.featured"
               style="position:absolute;top:12px;inset-inline-end:12px;background:var(--gold);color:var(--obsidian);font-size:10px;font-weight:800;padding:3px 10px;border-radius:50px;z-index:2;letter-spacing:1px">
-              FEATURED
+              {{ t('common.featured') }}
             </div>
             <button
               @click.stop="toggleWishlist(product)"
@@ -155,7 +156,7 @@
           </div>
           <!-- Info -->
           <div style="padding:16px">
-            <div style="font-size:11px;color:var(--gold);font-weight:700;letter-spacing:1px;margin-bottom:4px">{{ product.brand || product.category?.name || 'LUXURY' }}</div>
+            <div style="font-size:11px;color:var(--gold);font-weight:700;letter-spacing:1px;margin-bottom:4px">{{ product.brand || product.category?.name || t('common.luxury') }}</div>
             <div style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:10px">{{ locale === 'ar' ? (product.name_ar || product.name) : (product.name_en || product.name) }}</div>
             <div style="display:flex;align-items:center;justify-content:space-between">
               <div style="display:flex;gap:4px">
@@ -237,7 +238,7 @@ async function loadCategories() {
       ...cat,
       emoji: categoryEmojis[index % categoryEmojis.length],
       gradient: categoryGradients[index % categoryGradients.length],
-      count: `${cat.products_count || 0} Products`
+      count: `${cat.products_count || 0} ${t('home.products')}`
     }))
   } catch (error) {
     console.error('Failed to load categories:', error)
