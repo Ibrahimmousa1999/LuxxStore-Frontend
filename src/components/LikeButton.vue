@@ -43,27 +43,37 @@ const isLiked = ref(props.initialLiked)
 const loading = ref(false)
 
 async function toggleLike() {
+  console.log('toggleLike called', { productId: props.productId, isAuthenticated: authStore.isAuthenticated })
+  
   if (!authStore.isAuthenticated) {
-    // Show login prompt or redirect to login
+    console.log('User not authenticated')
     alert(t('product.login_to_like'))
     return
   }
 
-  loading.value = true
   try {
+    loading.value = true
     if (isLiked.value) {
       // Unlike
-      await axios.delete(`/products/${props.productId}/like`)
+      console.log('Unliking product:', props.productId)
+      const response = await axios.delete(`/products/${props.productId}/like`)
+      console.log('Unlike response:', response.data)
       isLiked.value = false
       emit('unliked', props.productId)
     } else {
       // Like
-      await axios.post(`/products/${props.productId}/like`)
+      console.log('Liking product:', props.productId)
+      const response = await axios.post(`/products/${props.productId}/like`)
+      console.log('Like response:', response.data)
       isLiked.value = true
       emit('liked', props.productId)
     }
   } catch (error) {
     console.error('Error toggling like:', error)
+    console.error('Error details:', error.response?.data)
+    console.error('Error status:', error.response?.status)
+    console.error('Error headers:', error.response?.headers)
+    alert('Failed to toggle like. Please try again.')
   } finally {
     loading.value = false
   }
