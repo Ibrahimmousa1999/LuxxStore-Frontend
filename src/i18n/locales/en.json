@@ -287,7 +287,37 @@
       "featured_updated": "Featured Updated",
       "failed_update_featured": "Failed to update featured status",
       "marked_featured": "marked as featured",
-      "removed_featured": "removed from featured"
+      "removed_featured": "removed from featured",
+      "pages_management": "Pages Management",
+      "pages_desc": "Manage static pages like Privacy Policy, Terms of Service, and more",
+      "add_page": "Add New Page",
+      "edit_page": "Edit Page",
+      "page_title": "Title",
+      "page_title_en": "Title (English)",
+      "page_title_ar": "Title (Arabic)",
+      "page_title_en_placeholder": "e.g., Privacy Policy",
+      "page_title_ar_placeholder": "e.g., سياسة الخصوصية",
+      "slug": "URL Slug",
+      "slug_placeholder": "e.g., privacy-policy",
+      "slug_help": "Leave empty to auto-generate from title",
+      "content_en": "Content (English)",
+      "content_ar": "Content (Arabic)",
+      "content_en_placeholder": "Enter page content in English...",
+      "content_ar_placeholder": "Enter page content in Arabic...",
+      "html_supported": "HTML tags are supported",
+      "meta_desc_en": "Meta Description (English)",
+      "meta_desc_ar": "Meta Description (Arabic)",
+      "meta_desc_placeholder": "Brief description for SEO",
+      "order": "Display Order",
+      "order_placeholder": "0",
+      "no_pages": "No Pages Found",
+      "no_pages_desc": "Create your first page to get started",
+      "pages": "Pages",
+      "title_required": "Title is required",
+      "content_required": "Content is required",
+      "delete_page_confirm": "Are you sure you want to delete",
+      "activate": "Activate",
+      "deactivate": "Deactivate"
     },
     "merchant": {
       "title": "Merchant Dashboard",
@@ -407,7 +437,13 @@
     "failed_update_status": "Failed to update category status",
     "category_deleted_success": "has been deleted successfully",
     "category_updated_msg": "has been updated",
-    "category_created_msg": "has been added"
+    "category_created_msg": "has been added",
+    "page_updated": "Page Updated Successfully",
+    "page_created": "Page Created Successfully",
+    "page_deleted": "Page Deleted",
+    "page_updated_msg": "has been updated",
+    "page_created_msg": "has been added",
+    "page_deleted_success": "has been deleted successfully"
   },
   "order": {
     "status": {
@@ -433,5 +469,10 @@
     "careers": "Careers",
     "press": "Press",
     "rights": "All rights reserved"
+  },
+  "pages": {
+    "not_found": "Page Not Found",
+    "not_found_desc": "The page you are looking for does not exist or has been removed.",
+    "back_home": "Back to Home"
   }
 }

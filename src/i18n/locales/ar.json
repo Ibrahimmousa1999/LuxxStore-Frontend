@@ -287,7 +287,37 @@
       "featured_updated": "تم تحديث المميز",
       "failed_update_featured": "فشل تحديث حالة المميز",
       "marked_featured": "تم تعيينه كمميز",
-      "removed_featured": "تمت إزالته من المميزة"
+      "removed_featured": "تمت إزالته من المميزة",
+      "pages_management": "إدارة الصفحات",
+      "pages_desc": "إدارة الصفحات الثابتة مثل سياسة الخصوصية وشروط الخدمة والمزيد",
+      "add_page": "إضافة صفحة جديدة",
+      "edit_page": "تعديل الصفحة",
+      "page_title": "العنوان",
+      "page_title_en": "العنوان (بالإنجليزية)",
+      "page_title_ar": "العنوان (بالعربية)",
+      "page_title_en_placeholder": "مثال: Privacy Policy",
+      "page_title_ar_placeholder": "مثال: سياسة الخصوصية",
+      "slug": "رابط URL",
+      "slug_placeholder": "مثال: privacy-policy",
+      "slug_help": "اتركه فارغًا للإنشاء التلقائي من العنوان",
+      "content_en": "المحتوى (بالإنجليزية)",
+      "content_ar": "المحتوى (بالعربية)",
+      "content_en_placeholder": "أدخل محتوى الصفحة بالإنجليزية...",
+      "content_ar_placeholder": "أدخل محتوى الصفحة بالعربية...",
+      "html_supported": "يتم دعم علامات HTML",
+      "meta_desc_en": "الوصف التعريفي (بالإنجليزية)",
+      "meta_desc_ar": "الوصف التعريفي (بالعربية)",
+      "meta_desc_placeholder": "وصف موجز لتحسين محركات البحث",
+      "order": "ترتيب العرض",
+      "order_placeholder": "0",
+      "no_pages": "لا توجد صفحات",
+      "no_pages_desc": "أنشئ صفحتك الأولى للبدء",
+      "pages": "الصفحات",
+      "title_required": "العنوان مطلوب",
+      "content_required": "المحتوى مطلوب",
+      "delete_page_confirm": "هل أنت متأكد من حذف",
+      "activate": "تفعيل",
+      "deactivate": "إلغاء التفعيل"
     },
     "merchant": {
       "title": "لوحة التاجر",
@@ -407,7 +437,13 @@
     "failed_update_status": "فشل تحديث حالة الفئة",
     "category_deleted_success": "تم حذفها بنجاح",
     "category_updated_msg": "تم تحديثها",
-    "category_created_msg": "تمت إضافتها"
+    "category_created_msg": "تمت إضافتها",
+    "page_updated": "تم تحديث الصفحة بنجاح",
+    "page_created": "تم إنشاء الصفحة بنجاح",
+    "page_deleted": "تم حذف الصفحة",
+    "page_updated_msg": "تم تحديثها",
+    "page_created_msg": "تمت إضافتها",
+    "page_deleted_success": "تم حذفها بنجاح"
   },
   "order": {
     "status": {
@@ -433,5 +469,10 @@
     "careers": "الوظائف",
     "press": "الإعلام",
     "rights": "جميع الحقوق محفوظة"
+  },
+  "pages": {
+    "not_found": "الصفحة غير موجودة",
+    "not_found_desc": "الصفحة التي تبحث عنها غير موجودة أو تم إزالتها.",
+    "back_home": "العودة للرئيسية"
   }
 }

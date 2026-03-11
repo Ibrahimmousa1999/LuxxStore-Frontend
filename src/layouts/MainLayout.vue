@@ -236,8 +236,9 @@
         style="font-size:13px;color:var(--text-dim)">
         <span>© 2026 لوكس ستور | LuxStore. {{ t('footer.rights') }}.</span>
         <div class="flex gap-4">
-          <a href="#" class="footer-link-sm">Privacy Policy</a>
-          <a href="#" class="footer-link-sm">Terms of Service</a>
+          <router-link to="/page/privacy-policy" class="footer-link-sm">{{ t('footer.privacy') }}</router-link>
+          <router-link to="/page/terms-of-service" class="footer-link-sm">{{ t('footer.terms') }}</router-link>
+          <router-link to="/page/about-us" class="footer-link-sm">{{ t('footer.about') }}</router-link>
         </div>
       </div>
     </footer>

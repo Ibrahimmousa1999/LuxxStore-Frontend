@@ -33,6 +33,11 @@ const router = createRouter({
           name: 'checkout',
           component: () => import('@/views/Checkout.vue'),
           meta: { requiresAuth: true }
+        },
+        {
+          path: 'page/:slug',
+          name: 'page',
+          component: () => import('@/views/Page.vue')
         }
       ]
     },
@@ -96,6 +101,12 @@ const router = createRouter({
           path: 'admin/settings',
           name: 'admin-settings',
           component: () => import('@/views/dashboard/admin/Settings.vue'),
+          meta: { role: 'admin' }
+        },
+        {
+          path: 'admin/pages',
+          name: 'admin-pages',
+          component: () => import('@/views/dashboard/admin/Pages.vue'),
           meta: { role: 'admin' }
         },
         {

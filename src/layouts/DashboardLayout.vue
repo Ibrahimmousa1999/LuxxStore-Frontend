@@ -157,6 +157,7 @@ const adminLinks = computed(() => [
   { to: '/dashboard/admin/users', icon: '👥', label: t('dashboard.admin.users') },
   { to: '/dashboard/admin/products', icon: '📦', label: t('dashboard.admin.products') },
   { to: '/dashboard/admin/categories', icon: '📁', label: t('nav.categories') },
+  { to: '/dashboard/admin/pages', icon: '📄', label: t('dashboard.admin.pages') },
   { to: '/dashboard/admin/orders', icon: '🧾', label: t('dashboard.admin.orders') },
   { to: '/dashboard/admin/settings', icon: '⚙️', label: t('dashboard.admin.settings') },
   { to: '/dashboard/profile', icon: '👤', label: t('dashboard.admin.profile') },
