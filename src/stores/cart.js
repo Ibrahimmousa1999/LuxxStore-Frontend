@@ -84,7 +84,7 @@ export const useCartStore = defineStore('cart', () => {
         ...customerData
       }
 
-      const response = await axios.post('/api/orders', orderData)
+      const response = await axios.post('/orders', orderData)
       clearCart()
       return response.data
     } catch (error) {
