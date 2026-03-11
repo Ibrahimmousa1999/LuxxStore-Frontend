@@ -99,15 +99,14 @@
         </div>
 
         <!-- Actions -->
-        <div style="display:flex;gap:12px;margin-bottom:32px">
-          <button @click="addToCart" class="btn btn-gold" style="flex:1;justify-content:center;border-radius:14px;font-size:16px">
+        <div style="display:flex;gap:12px;margin-bottom:32px;flex-wrap:wrap">
+          <button @click="addToCart" :disabled="product.stock === 0" class="btn btn-gold" style="flex:1;min-width:200px;border-radius:12px;padding:16px 32px;font-size:16px;font-weight:700">
             🛒 {{ t('product.add_to_cart') }}
           </button>
-          <button @click="wishlist = !wishlist"
-            :style="wishlist ? 'background:rgba(224,92,92,0.15);border-color:rgba(224,92,92,0.4)!important' : ''"
-            class="btn btn-ghost" style="width:50px;height:50px;padding:0;border-radius:14px;font-size:20px">
-            {{ wishlist ? '❤️' : '🤍' }}
+          <button @click="buyNow" :disabled="product.stock === 0" class="btn btn-outline" style="flex:1;min-width:200px;border-radius:12px;padding:16px 32px;font-size:16px;font-weight:700">
+            ⚡ {{ t('product.buy_now') }}
           </button>
+          <LikeButton :product-id="product.id" style="align-self:center" />
         </div>
 
         <!-- Description -->
@@ -138,6 +137,7 @@ import { useCartStore } from '@/stores/cart'
 import { useProductsStore } from '@/stores/products'
 import { useConfig } from '@/composables/useConfig'
 import VueEasyLightbox from 'vue-easy-lightbox'
+import LikeButton from '@/components/LikeButton.vue'
 import axios from '@/utils/axios'
 
 const { t } = useI18n()
