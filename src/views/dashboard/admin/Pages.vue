@@ -100,18 +100,22 @@
             </div>
             <div>
               <label style="display:block;font-size:13px;font-weight:600;color:var(--text-muted);margin-bottom:8px">{{ t('dashboard.admin.content_en') }} *</label>
-              <textarea v-model="pageForm.content_en" required class="lux-input" rows="8" :placeholder="t('dashboard.admin.content_en_placeholder')"
-                :style="formErrors.content_en ? 'border-radius:10px;border-color:var(--danger)' : 'border-radius:10px'" 
-                @input="formErrors.content_en = ''"></textarea>
-              <div style="font-size:12px;color:var(--text-muted);margin-top:4px">{{ t('dashboard.admin.html_supported') }}</div>
+              <RichTextEditor 
+                v-model="pageForm.content_en" 
+                :placeholder="t('dashboard.admin.content_en_placeholder')"
+                height="400px"
+                @update:modelValue="formErrors.content_en = ''"
+              />
               <div v-if="formErrors.content_en" style="color:var(--danger);font-size:12px;margin-top:4px">{{ formErrors.content_en }}</div>
             </div>
             <div>
               <label style="display:block;font-size:13px;font-weight:600;color:var(--text-muted);margin-bottom:8px">{{ t('dashboard.admin.content_ar') }} *</label>
-              <textarea v-model="pageForm.content_ar" required class="lux-input" rows="8" :placeholder="t('dashboard.admin.content_ar_placeholder')" dir="rtl"
-                :style="formErrors.content_ar ? 'border-radius:10px;border-color:var(--danger)' : 'border-radius:10px'" 
-                @input="formErrors.content_ar = ''"></textarea>
-              <div style="font-size:12px;color:var(--text-muted);margin-top:4px" dir="rtl">{{ t('dashboard.admin.html_supported') }}</div>
+              <RichTextEditor 
+                v-model="pageForm.content_ar" 
+                :placeholder="t('dashboard.admin.content_ar_placeholder')"
+                height="400px"
+                @update:modelValue="formErrors.content_ar = ''"
+              />
               <div v-if="formErrors.content_ar" style="color:var(--danger);font-size:12px;margin-top:4px">{{ formErrors.content_ar }}</div>
             </div>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
@@ -166,6 +170,7 @@ import { ref, computed, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import axios from '@/utils/axios'
 import { useToast } from '@/composables/useToast'
+import RichTextEditor from '@/components/RichTextEditor.vue'
 
 const { t, locale } = useI18n()
 const { success, error: showError } = useToast()

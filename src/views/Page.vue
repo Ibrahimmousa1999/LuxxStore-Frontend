@@ -117,6 +117,17 @@ watch(() => route.params.slug, () => {
   font-size: 16px;
 }
 
+.page-content :deep(h1) {
+  font-size: 40px;
+  font-weight: 900;
+  color: var(--text);
+  margin-top: 48px;
+  margin-bottom: 20px;
+  font-family: 'Playfair Display', serif;
+  border-bottom: 2px solid var(--gold);
+  padding-bottom: 12px;
+}
+
 .page-content :deep(h2) {
   font-size: 32px;
   font-weight: 800;
@@ -142,9 +153,26 @@ watch(() => route.params.slug, () => {
   margin-bottom: 10px;
 }
 
+.page-content :deep(h5) {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text);
+  margin-top: 20px;
+  margin-bottom: 8px;
+}
+
+.page-content :deep(h6) {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-top: 16px;
+  margin-bottom: 8px;
+}
+
 .page-content :deep(p) {
   margin-bottom: 16px;
   color: var(--text-muted);
+  line-height: 1.8;
 }
 
 .page-content :deep(ul),
@@ -156,29 +184,64 @@ watch(() => route.params.slug, () => {
 
 .page-content :deep(li) {
   margin-bottom: 8px;
+  line-height: 1.7;
 }
 
 .page-content :deep(a) {
   color: var(--gold);
   text-decoration: underline;
-  transition: opacity 0.2s;
+  transition: all 0.2s;
 }
 
 .page-content :deep(a:hover) {
   opacity: 0.8;
+  color: var(--gold);
 }
 
-.page-content :deep(strong) {
+.page-content :deep(strong),
+.page-content :deep(b) {
   color: var(--text);
   font-weight: 700;
+}
+
+.page-content :deep(em),
+.page-content :deep(i) {
+  font-style: italic;
+  color: var(--text);
+}
+
+.page-content :deep(u) {
+  text-decoration: underline;
+}
+
+.page-content :deep(s),
+.page-content :deep(strike) {
+  text-decoration: line-through;
+  opacity: 0.7;
 }
 
 .page-content :deep(code) {
   background: var(--surface2);
   padding: 2px 6px;
   border-radius: 4px;
-  font-family: monospace;
+  font-family: 'Courier New', monospace;
   font-size: 14px;
+  color: var(--gold);
+}
+
+.page-content :deep(pre) {
+  background: var(--surface2);
+  padding: 16px;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 20px 0;
+  border: 1px solid var(--border-white);
+}
+
+.page-content :deep(pre code) {
+  background: transparent;
+  padding: 0;
+  color: var(--text);
 }
 
 .page-content :deep(blockquote) {
@@ -187,5 +250,76 @@ watch(() => route.params.slug, () => {
   margin: 24px 0;
   font-style: italic;
   color: var(--text-muted);
+  background: var(--surface2);
+  padding: 16px 20px;
+  border-radius: 0 8px 8px 0;
+}
+
+.page-content :deep(img) {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 24px 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.page-content :deep(table) {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 24px 0;
+  background: var(--surface2);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.page-content :deep(th) {
+  background: var(--surface);
+  color: var(--gold);
+  font-weight: 700;
+  padding: 12px;
+  text-align: left;
+  border-bottom: 2px solid var(--border-white);
+}
+
+.page-content :deep(td) {
+  padding: 12px;
+  border-bottom: 1px solid var(--border-white);
+  color: var(--text-muted);
+}
+
+.page-content :deep(tr:last-child td) {
+  border-bottom: none;
+}
+
+.page-content :deep(hr) {
+  border: none;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold), transparent);
+  margin: 32px 0;
+}
+
+/* Quill editor specific styles */
+.page-content :deep(.ql-align-center) {
+  text-align: center;
+}
+
+.page-content :deep(.ql-align-right) {
+  text-align: right;
+}
+
+.page-content :deep(.ql-align-justify) {
+  text-align: justify;
+}
+
+.page-content :deep(.ql-indent-1) {
+  padding-left: 3em;
+}
+
+.page-content :deep(.ql-indent-2) {
+  padding-left: 6em;
+}
+
+.page-content :deep(.ql-indent-3) {
+  padding-left: 9em;
 }
 </style>

@@ -223,12 +223,12 @@
           <a href="#" class="footer-link">{{ t('footer.faq') }}</a>
           <a href="#" class="footer-link">{{ t('footer.returns') }}</a>
         </div>
-        <!-- Company -->
+        <!-- Pages -->
         <div>
           <h4 class="footer-col-title">{{ t('footer.company') }}</h4>
-          <a href="#" class="footer-link">{{ t('footer.about') }}</a>
-          <a href="#" class="footer-link">{{ t('footer.careers') }}</a>
-          <a href="#" class="footer-link">{{ t('footer.press') }}</a>
+          <router-link v-for="page in footerPages" :key="page.id" :to="`/page/${page.slug}`" class="footer-link">
+            {{ locale === 'ar' ? page.title_ar : page.title_en }}
+          </router-link>
         </div>
       </div>
       <div class="gold-line"></div>
@@ -236,9 +236,9 @@
         style="font-size:13px;color:var(--text-dim)">
         <span>© 2026 لوكس ستور | LuxStore. {{ t('footer.rights') }}.</span>
         <div class="flex gap-4">
-          <router-link to="/page/privacy-policy" class="footer-link-sm">{{ t('footer.privacy') }}</router-link>
-          <router-link to="/page/terms-of-service" class="footer-link-sm">{{ t('footer.terms') }}</router-link>
-          <router-link to="/page/about-us" class="footer-link-sm">{{ t('footer.about') }}</router-link>
+          <router-link v-for="page in legalPages" :key="page.id" :to="`/page/${page.slug}`" class="footer-link-sm">
+            {{ locale === 'ar' ? page.title_ar : page.title_en }}
+          </router-link>
         </div>
       </div>
     </footer>
@@ -252,6 +252,7 @@ import { useI18n } from 'vue-i18n'
 import { useAuthStore } from '@/stores/auth'
 import { useCartStore } from '@/stores/cart'
 import { useTheme } from '@/composables/useTheme'
+import axios from '@/utils/axios'
 
 const { t, locale } = useI18n()
 const router = useRouter()
@@ -261,6 +262,7 @@ const cartStore = useCartStore()
 const { theme, toggleTheme } = useTheme()
 const showUserMenu = ref(false)
 const showMobileMenu = ref(false)
+const pages = ref([])
 
 const navLinks = computed(() => [
   { to: '/', label: t('nav.home') },
@@ -270,6 +272,14 @@ const navLinks = computed(() => [
 const socials = [
   { icon: '𝕏' }, { icon: '📘' }, { icon: '📸' }, { icon: '▶️' }
 ]
+
+const footerPages = computed(() => {
+  return pages.value.filter(p => !['privacy-policy', 'terms-of-service'].includes(p.slug))
+})
+
+const legalPages = computed(() => {
+  return pages.value.filter(p => ['privacy-policy', 'terms-of-service'].includes(p.slug))
+})
 
 const dashboardRoute = computed(() => {
   if (authStore.isAdmin) return '/dashboard/admin'
@@ -296,11 +306,21 @@ function onOutsideClick(e) {
   if (!e.target.closest('.relative')) showUserMenu.value = false
 }
 
+async function loadPages() {
+  try {
+    const response = await axios.get('/pages/active')
+    pages.value = response.data.data || response.data
+  } catch (error) {
+    console.error('Failed to load pages:', error)
+  }
+}
+
 onMounted(() => {
   const dir = locale.value === 'ar' ? 'rtl' : 'ltr'
   document.documentElement.setAttribute('dir', dir)
   document.documentElement.setAttribute('lang', locale.value)
   document.addEventListener('click', onOutsideClick)
+  loadPages()
 })
 
 onUnmounted(() => document.removeEventListener('click', onOutsideClick))
